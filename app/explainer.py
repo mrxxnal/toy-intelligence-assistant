@@ -1,42 +1,46 @@
 from openai import OpenAI
-import streamlit as st
 import os
+from dotenv import load_dotenv
 
-def get_client():
-    try:
-        return OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-    except:
-        return OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+load_dotenv()
 
-client = get_client()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
-def explain_match(query_image, toy_row):
+def explain_match(query_image, row):
+    """
+    Generates human-style reasoning for why a toy matches another toy/image.
+    """
+
     prompt = f"""
-You are a toy recommendation AI.
+You are a helpful toy recommendation expert.
 
-Explain why this toy matches the user's uploaded image.
-
-Be short and clear.
-
-TOY:
-Name: {toy_row['name']}
-Category: {toy_row['category']}
-Description: {toy_row['description']}
-Age: {toy_row.get('age', 'Unknown')}
+Explain WHY these two toys match in a natural, casual, human, easy-to-understand way and don't use hyphens.
 
 Rules:
-- 2 to 4 sentences only
-- Mention category or activity similarity
-- Mention age suitability if relevant
+- Write like a real warm person explaining to a parent
+- Avoid robotic phrases like "based on embeddings" or "vector similarity"
+- Be specific and grounded
+- Mention 2–3 clear reasons max
+- Keep it short (3–5 sentences)
+
+TOY 1 (query image):
+- This is the user's uploaded toy image
+
+TOY 2:
+Name: {row['name']}
+Category: {row['category']}
+Description: {row['description']}
+
+Now explain why they are similar.
 """
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "You explain recommendations clearly and simply."},
             {"role": "user", "content": prompt}
-        ]
+        ],
+        temperature=0.6
     )
 
     return response.choices[0].message.content
