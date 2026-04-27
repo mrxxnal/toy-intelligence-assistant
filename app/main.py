@@ -46,7 +46,14 @@ if uploaded_file is not None:
             **Recommended Age:** {row.get('age', 'Unknown')}
             """
 
+            from explainer import explain_match
+
+            with st.spinner("Explaining why this matches..."):
+                explanation = explain_match(image, row)
+
             st.markdown(insights)
+            st.markdown("### 🧠 Why this matches")
+            st.write(explanation)
             st.markdown("---")
 
     # ✅ Chatbot stays OUTSIDE loop (unchanged logic)
