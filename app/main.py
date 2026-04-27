@@ -35,7 +35,7 @@ if uploaded_file is not None:
         col = cols[idx % 2]
 
         with col:
-            st.image(image, caption="Uploaded Image", use_column_width=True)
+            st.image(image, caption="Uploaded Image")
 
             st.markdown(f"**{row['name']}**")
             st.caption(row["category"])
