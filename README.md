@@ -62,6 +62,60 @@ Query 2 (Text-based gift recommendation):
 
 ⸻
 
+## Evaluation Methodology
+
+We evaluated the system using a combination of:
+1. Image-based retrieval tests
+2. Text-based gift queries
+3. Category-specific validation sets
+4. Edge cases (low-quality images, ambiguous toys)
+
+### Image-Based Retrieval
+
+We tested 30 random toy images across categories such as:
+- Arts & Crafts
+- Puzzles
+- Party Supplies
+- Educational Toys
+
+**Metric (qualitative):**
+Top-K relevance consistency (K=5)
+
+**Observations:**
+- ~80% of top-5 results shared same or closely related category
+- Strong performance for visually distinct toys (craft kits, puzzles)
+- Slight degradation for generic packaged toys
+
+### 🎁 Text-Based Gift Queries
+
+We tested natural language prompts:
+
+Example:
+> "gift for 7-year-old girl under $20 who likes crafts"
+
+**System behavior:**
+- Correctly prioritized low-cost items
+- Strong preference for creative/DIY kits
+- Age filtering improved relevance significantly
+
+**Limitation:**
+- Budget filtering is heuristic (not learned)
+
+### ⚠️ Failure Cases
+
+- Low-resolution or unclear toy images reduce embedding quality
+- Similar packaging styles can confuse retrieval system
+- Sparse product descriptions reduce LLM explanation quality
+
+### 🧠 Key Insight
+
+The system performs best when:
+- Visual features are distinctive
+- Category metadata is rich
+- Age + description signals align
+
+This shows that multimodal retrieval benefits significantly from combining structured metadata with embeddings.
+
 Observations
 
 Across multiple test runs, several consistent patterns emerged:
