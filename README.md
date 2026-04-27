@@ -106,3 +106,10 @@ From a practical standpoint, the system demonstrates how combining vision embedd
 ```bash
 pip install -r requirements.txt
 streamlit run app/main.py
+
+## Ethical Considerations
+
+- The system may inherit biases from dataset descriptions
+- Age recommendations are heuristic and not safety-certified
+- Outputs should not replace parental or expert judgment
+- No personal user data is stored
