@@ -80,6 +80,7 @@ faiss-cpu
 transformers
 torch
 Pillow
-datasets
+datasets==2.19.0
+pyarrow==14.0.2
 python-dotenv
 openai
